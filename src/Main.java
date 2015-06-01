@@ -35,9 +35,11 @@ public class Main extends Application{
         });
         Button button3 = new Button("Return to desktop");
         button3.setOnAction(e-> closeProgram());
+        Button button4 = new Button("Search");
+        button4.setOnAction(e->SearchFor.display());
 
         VBox layout = new VBox(20);
-        layout.getChildren().addAll(button1, button2, button3);
+        layout.getChildren().addAll(button1, button2, button4, button3);
         layout.setAlignment(Pos.CENTER);
         scene1 = new Scene(layout, 200, 200);
 
