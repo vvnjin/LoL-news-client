@@ -1,3 +1,4 @@
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -27,15 +28,19 @@ public class ConfirmBox {
         Button noButton = new Button("No");
 
         yesButton.setOnAction(e-> {answer = true; window.close();});
-        noButton.setOnAction(e->{answer=false;window.close();});
+        noButton.setOnAction(e -> {
+            answer = false;
+            window.close();
+        });
 
         VBox layout = new VBox(10);
         layout.getChildren().addAll(label, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(5));
 
         Scene scene = new Scene(layout);
         window.setScene(scene);
-
+        window.setResizable(false);
         window.showAndWait();
 
         return answer;

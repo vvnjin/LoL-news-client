@@ -5,7 +5,9 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -29,9 +31,37 @@ public class Main extends Application{
         login.setMaxHeight(100);
         login.setResizable(false);
         TextField username = new TextField();
-        username.setPromptText("User");
-        TextField password = new TextField();
-        password.setPromptText("Password");
+        username.setPromptText("CS ID (e.g. a2x9)");
+        PasswordField password = new PasswordField();
+        password.setPromptText("UBC ID");
+        username.setOnKeyPressed(event -> {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        if (!username.getText().isEmpty() && !password.getText().isEmpty()) {
+                            loginPress(username.getText(), password.getText());
+                        }
+                        if (username.getText().isEmpty()) {
+                            username.setStyle("-fx-background-color: #FF6666");
+                        }
+                        if (password.getText().isEmpty()) {
+                            password.setStyle("-fx-background-color: #FF6666");
+                        }
+                    }
+                }
+        );
+        password.setOnKeyPressed(event -> {
+                    if (event.getCode().equals(KeyCode.ENTER)) {
+                        if (!username.getText().isEmpty() && !password.getText().isEmpty()) {
+                            loginPress(username.getText(), password.getText());
+                        }
+                        if (username.getText().isEmpty()) {
+                            username.setStyle("-fx-background-color: #ff9ca0");
+                        }
+                        if (password.getText().isEmpty()) {
+                            password.setStyle("-fx-background-color: #ff9ca0");
+                        }
+                    }
+                }
+        );
         //Label logIn = new Label("Log in:");
         Button logInButton = new Button("Login");
         logInButton.setMinHeight(60);
@@ -41,9 +71,26 @@ public class Main extends Application{
         loginHBox.setPadding(new Insets(5));
         VBox fields = new VBox (5);
         fields.setPadding(new Insets(5));
-        fields.getChildren().addAll(username,password);
+        fields.getChildren().addAll(username, password);
         loginHBox.getChildren().addAll(fields, logInButton);
-        logInButton.setOnAction(e -> {login.close();mainMenu();});
+        logInButton.setOnAction(event -> {
+                    if (!username.getText().isEmpty() && !password.getText().isEmpty()) {
+                        loginPress(username.getText(), password.getText());
+                    }
+                    if (username.getText().isEmpty()) {
+                        username.setStyle("-fx-background-color: #ff9ca0");
+                        if (!password.getText().isEmpty()) {
+                            password.setStyle("-fx-background-color: white");
+                        }
+                    }
+                    if (password.getText().isEmpty()) {
+                        password.setStyle("-fx-background-color: #ff9ca0");
+                        if (!username.getText().isEmpty()) {
+                            username.setStyle("-fx-background-color: white");
+                        }
+                    }
+                }
+        );
         Scene loginScene = new Scene(loginHBox);
 
         //Start window
@@ -70,9 +117,9 @@ public class Main extends Application{
             System.out.println(addedPlayer);
         });
         Button button3 = new Button("Return to desktop");
-        button3.setOnAction(e-> closeProgram(window));
+        button3.setOnAction(e -> closeProgram(window));
         Button button4 = new Button("Search");
-        button4.setOnAction(e->SearchFor.display());
+        button4.setOnAction(e -> SearchFor.display());
 
         VBox layout = new VBox(20);
         layout.getChildren().addAll(button1, button2, button4, button3);
@@ -87,5 +134,12 @@ public class Main extends Application{
     private void closeProgram(Stage stage) {
         Boolean answer = ConfirmBox.display("Closing", "Are you sure you wish to exit?");
         if (answer) stage.close();
+    }
+
+    private void loginPress (String user, String password) {
+        System.out.println("Testing only:");
+        System.out.println("Connection con = DriverManager.getConnection(\"jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug\", \"ora_" + user + "\", \"a" + password + "\");");
+        login.close();
+        mainMenu();
     }
 }
