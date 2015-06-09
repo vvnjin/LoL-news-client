@@ -1,3 +1,4 @@
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,11 +22,12 @@ public class AlertBox {
 
         Label label = new Label(message);
         Button button = new Button("Close");
-        button.setOnAction(e->window.close());
+        button.setOnAction(e -> window.close());
 
         VBox layout = new VBox(10);
         layout.getChildren().addAll(label,button);
         layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(5));
 
         Scene scene = new Scene(layout);
         window.setScene(scene);

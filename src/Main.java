@@ -13,6 +13,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
+
 public class Main extends Application{
 
     Stage window, login;
@@ -40,10 +42,10 @@ public class Main extends Application{
                             loginPress(username.getText(), password.getText());
                         }
                         if (username.getText().isEmpty()) {
-                            username.setStyle("-fx-background-color: #FF6666");
+                            username.setStyle("-fx-background-color: #ff9ca0");
                         }
                         if (password.getText().isEmpty()) {
-                            password.setStyle("-fx-background-color: #FF6666");
+                            password.setStyle("-fx-background-color: #ff9ca0");
                         }
                     }
                 }
@@ -137,9 +139,13 @@ public class Main extends Application{
     }
 
     private void loginPress (String user, String password) {
-        System.out.println("Testing only:");
-        System.out.println("Connection con = DriverManager.getConnection(\"jdbc:oracle:thin:@dbhost.ugrad.cs.ubc.ca:1522:ug\", \"ora_" + user + "\", \"a" + password + "\");");
-        login.close();
-        mainMenu();
+        LoginConnection loginConnection = new LoginConnection();
+        try {
+            loginConnection.logIn(user,password);
+            login.close();
+            mainMenu();
+        } catch (SQLException e) {
+            AlertBox.display("Error", "Wrong user/password!");
+        }
     }
 }
