@@ -1,15 +1,12 @@
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -113,11 +110,10 @@ public class Main extends Application{
         //Post-login: Main menu
         Button button1 = new Button("Check your feed");
         button1.setOnAction(e -> AlertBox.display("News feed", "Click button to close"));
-        Button button2 = new Button("Add player");
-        button2.setOnAction(e -> {
-            String addedPlayer = AddPlayer.display("Add Player", "Enter player name: ");
-            System.out.println(addedPlayer);
-        });
+        Button button2 = new Button("Add Something");
+        button2.setOnAction(e -> AddBox.display("Add an Entity", "What do you want to add?"));
+            //System.out.println(addedPlayer);
+
         Button button3 = new Button("Return to desktop");
         button3.setOnAction(e -> closeProgram(window));
         Button button4 = new Button("Search");
@@ -148,4 +144,8 @@ public class Main extends Application{
             AlertBox.display("Error", "Wrong user/password!");
         }
     }
+
+   /*private void openAddBox(Stage stage){
+        Enumeration answer = AddBox.display("Add Entity", "What do you want to add?" )*/
+
 }
